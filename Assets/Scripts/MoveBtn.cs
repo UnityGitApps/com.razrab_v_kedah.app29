@@ -2,14 +2,27 @@ using UnityEngine;
 
 public class MoveBtn : MonoBehaviour
 {
+    private bool isPressing;
     [SerializeField] int direction;
-    private void OnMouseEnter()
+
+    private void OnMouseDown()
     {
-        if(!GamePlay.current)
+        isPressing = true;
+    }
+
+    private void OnMouseUp()
+    {
+        isPressing = false;
+    }
+
+    private void Update()
+    {
+        if (!GamePlay.current || !isPressing)
         {
             return;
         }
 
-        GamePlay.current.AddForce(new Vector2(30 * direction, 0), ForceMode2D.Force);
+        var lastVelocity = GamePlay.current.velocity;
+        GamePlay.current.velocity = new Vector2(lastVelocity.x + direction * 3 * Time.deltaTime, lastVelocity.y);
     }
 }

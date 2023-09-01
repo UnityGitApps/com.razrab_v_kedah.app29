@@ -17,6 +17,11 @@ public class GamePlay : MonoBehaviour
 
     private IEnumerator Spawn()
     {
+        while(!TapToStart.isStarted)
+        {
+            yield return null;
+        }
+
         while(true)
         {
             current = Figure.Instant();
